@@ -39,11 +39,6 @@ class RefundProcessor extends BaseProcessor
         if ($attempt === null) {
             return $this->failure($this->modx->lexicon('msp3paymentskeleton.err_attempt'));
         }
-
-        $lexiconKey = self::refundBlockLexicon((string) ($attempt['status'] ?? ''));
-        if ($lexiconKey !== null) {
-            return $this->failure($this->modx->lexicon($lexiconKey));
-        }
         $paymentId = AttemptReader::providerRefundId($attempt)
             ?: (string) $this->getProperty('payment_id', '');
         if ($paymentId === '') {
@@ -51,6 +46,10 @@ class RefundProcessor extends BaseProcessor
         }
         $amount = (float) $this->getProperty('amount', $order->get('cost'));
         $amount = $amount > 0 ? $amount : (float) $order->get('cost');
+        $lexiconKey = self::refundBlockLexicon((string) ($attempt['status'] ?? ''));
+        if ($lexiconKey !== null) {
+            return $this->failure($this->modx->lexicon($lexiconKey));
+        }
         $reason = (string) $this->getProperty('reason', 'Refund');
         try {
             $response = $this->settings()->client()->refundPayment($paymentId, [

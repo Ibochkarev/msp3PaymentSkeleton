@@ -115,18 +115,24 @@
       },
     },
     template:
-      '<div class="msp3paymentskeleton-tab" :aria-busy="loading ? \'true\' : \'false\'">' +
+      '<div class="msp3paymentskeleton-tab" :class="loading ? \'msp3paymentskeleton-tab--busy\' : \'\'" :aria-busy="loading ? \'true\' : \'false\'">' +
       '<h3>{{ t(\'attempts\', \'Платёжные попытки\') }}</h3>' +
-      '<p v-if="loading" class="msp3paymentskeleton-tab__loading" role="status">{{ t(\'loading\', \'Загрузка…\') }}</p>' +
+      '<p v-if="loading && !attempts.length" class="msp3paymentskeleton-tab__loading" role="status">{{ t(\'loading\', \'Загрузка…\') }}</p>' +
       '<p v-if="error" class="msp3paymentskeleton-tab__error" role="alert">{{ error }}</p>' +
-      '<p v-if="!attempts.length && !loading && !error" class="msp3paymentskeleton-tab__empty">{{ t(\'empty\', \'По этому заказу ещё нет попыток.\') }}</p>' +
-      '<table v-if="attempts.length">' +
+      '<div v-if="!attempts.length && !loading && !error" class="msp3paymentskeleton-tab__empty">' +
+      '<p>{{ t(\'empty\', \'По этому заказу ещё нет попыток.\') }}</p>' +
+      '<div class="msp3paymentskeleton-tab__actions">' +
+      '<button data-primary type="button" :disabled="loading" @click="call(\'mgr/sync\', {})">{{ t(\'sync\', \'Синхронизировать\') }}</button>' +
+      '</div></div>' +
+      '<div v-if="attempts.length" class="msp3paymentskeleton-tab__table-wrap">' +
+      '<table>' +
       '<thead><tr><th>ID</th><th>status</th><th>amount</th><th>external_id</th></tr></thead>' +
       '<tbody>' +
       '<tr v-for="row in attempts" :key="row.id">' +
       '<td>{{ row.id }}</td><td>{{ row.status }}</td>' +
-      '<td>{{ row.amount }} {{ row.currency }}</td><td>{{ row.external_id }}</td>' +
-      '</tr></tbody></table>' +
+      '<td class="msp3paymentskeleton-tab__amount">{{ row.amount }}&nbsp;{{ row.currency }}</td><td>{{ row.external_id }}</td>' +
+      '</tr></tbody></table></div>' +
+      '<div v-if="hasAttempts">' +
       '<div class="msp3paymentskeleton-tab__form">' +
       '<label>{{ t(\'amount\', \'Сумма возврата\') }}<input v-model="amount" type="text" inputmode="decimal" autocomplete="off"></label>' +
       '<label>{{ t(\'reason\', \'Причина\') }}<input v-model="reason" type="text" autocomplete="off"></label>' +
@@ -135,6 +141,7 @@
       '<button data-danger type="button" :disabled="loading || !hasAttempts" @click="call(\'mgr/refund\', { amount: amount, reason: reason }, t(\'confirm_refund\', \'Подтвердите действие\'))">{{ t(\'refund\', \'Возврат\') }}</button>' +
       '<button type="button" :disabled="loading || !hasAttempts" @click="call(\'mgr/cancel\', {}, t(\'confirm_cancel\', \'Подтвердите действие\'))">{{ t(\'cancel\', \'Отменить\') }}</button>' +
       '<button data-primary type="button" :disabled="loading || !hasAttempts" @click="call(\'mgr/sync\', {})">{{ t(\'sync\', \'Синхронизировать\') }}</button>' +
+      '</div>' +
       '</div>' +
       '</div>',
   }

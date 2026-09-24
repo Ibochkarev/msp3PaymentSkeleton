@@ -72,8 +72,6 @@ POST /assets/components/minishop3/api.php/api/v1/payment/webhook/{payment_method
 
 Скрипт из плагина грузится до `order.min.js`. Пока реестра нет, создайте stub с `pendingTabs` и один раз вызовите `register()` — как в [доках MS3](https://docs.modx.pro/en/components/minishop3/development/order-tabs-integration) и в `assets/.../js/mgr/order-tab.js`. Не повторяйте `register` через `DOMContentLoaded` и `setTimeout`: после монтирования Vue оба сработают и дадут `Tab with key "…" already registered`.
 
-Вкладку грузите только если `msOrder.payment_id` указывает на `msPayment.class` вашего namespace (`str_starts_with`). Иначе на каждом заказе копятся чужие вкладки.
-
 Конфиг (`connectorUrl`, лексикон) пишите в `addHtml` *перед* `<script src="…/order-tab.js">`. `addJavascript` в менеджере часто уходит в head раньше inline-конфига: вкладка замораживает пустой `cfg`, кнопки без подписей, ошибка `connectorUrl is not configured`.
 
 ## События

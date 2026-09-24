@@ -19,6 +19,3 @@ $_lang['msp3paymentskeleton.err_refund_pending'] = 'Сначала дождит�
 $_lang['msp3paymentskeleton.err_refund_hold'] = 'Сначала спишите холд. Возврат после capture.';
 $_lang['msp3paymentskeleton.err_refund_done'] = 'Попытка уже возвращена.';
 $_lang['msp3paymentskeleton.err_refund_status'] = 'Возврат недоступен в текущем статусе попытки.';
-$_lang['msp3paymentskeleton.tab_loading'] = 'Загрузка…';
-$_lang['msp3paymentskeleton.err_connector'] = 'Не удалось загрузить настройки вкладки. Обновите страницу.';
-$_lang['msp3paymentskeleton.err_generic'] = 'Не удалось выполнить действие';
