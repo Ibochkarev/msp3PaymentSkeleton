@@ -20,8 +20,9 @@
 }
 
 .msp3paymentskeleton-tab__actions button {
-    min-height: 32px;
-    padding: 6px 12px;
+    min-height: 36px;
+    min-width: 36px;
+    padding: 8px 14px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     background: #fff;
@@ -35,14 +36,31 @@
     color: #fff;
 }
 
+.msp3paymentskeleton-tab__actions button[data-danger] {
+    background: #fff;
+    border-color: #b91c1c;
+    color: #b91c1c;
+}
+
 .msp3paymentskeleton-tab__actions button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
+.msp3paymentskeleton-tab__actions button:focus-visible {
+    outline: 2px solid #111827;
+    outline-offset: 2px;
+}
+
+.msp3paymentskeleton-tab__actions button[data-danger]:focus-visible {
+    outline-color: #b91c1c;
+}
+
 .msp3paymentskeleton-tab__empty,
-.msp3paymentskeleton-tab__error {
+.msp3paymentskeleton-tab__error,
+.msp3paymentskeleton-tab__loading {
     color: #6b7280;
+    margin: 0 0 12px;
 }
 
 .msp3paymentskeleton-tab__error {
@@ -71,19 +89,28 @@
 
 .msp3paymentskeleton-tab__form {
     display: grid;
-    gap: 8px;
+    gap: 12px;
     margin: 0 0 16px;
     max-width: 28rem;
 }
 
 .msp3paymentskeleton-tab__form label {
+    display: grid;
+    gap: 4px;
     font-size: 12px;
     color: #6b7280;
 }
 
 .msp3paymentskeleton-tab__form input {
-    min-height: 32px;
+    min-height: 36px;
     padding: 6px 10px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
+    color: #111827;
+    font-size: 14px;
+}
+
+.msp3paymentskeleton-tab__form input:focus-visible {
+    outline: 2px solid #111827;
+    outline-offset: 2px;
 }

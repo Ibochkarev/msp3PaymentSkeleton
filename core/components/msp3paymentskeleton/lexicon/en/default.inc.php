@@ -19,3 +19,6 @@ $_lang['msp3paymentskeleton.err_refund_pending'] = 'Wait for a paid webhook or c
 $_lang['msp3paymentskeleton.err_refund_hold'] = 'Capture the hold first. Refund is allowed after capture.';
 $_lang['msp3paymentskeleton.err_refund_done'] = 'This attempt is already refunded.';
 $_lang['msp3paymentskeleton.err_refund_status'] = 'Refund is not available in the current attempt status.';
+$_lang['msp3paymentskeleton.tab_loading'] = 'Loading…';
+$_lang['msp3paymentskeleton.err_connector'] = 'Could not load tab settings. Refresh the page.';
+$_lang['msp3paymentskeleton.err_generic'] = 'Could not complete the action';

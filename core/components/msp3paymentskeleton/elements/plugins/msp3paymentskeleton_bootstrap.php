@@ -23,6 +23,25 @@ if ($page !== 'order') {
     return;
 }
 
+
+$orderId = (int) ($_REQUEST['id'] ?? $_GET['id'] ?? 0);
+if ($orderId < 1) {
+    return;
+}
+if (!class_exists(\MiniShop3\Model\msOrder::class) || !class_exists(\MiniShop3\Model\msPayment::class)) {
+    return;
+}
+$order = $modx->getObject(\MiniShop3\Model\msOrder::class, $orderId);
+if (!$order instanceof \MiniShop3\Model\msOrder) {
+    return;
+}
+$payment = $modx->getObject(\MiniShop3\Model\msPayment::class, (int) $order->get('payment_id'));
+$paymentClass = $payment ? (string) $payment->get('class') : '';
+if ($paymentClass === '' || !str_starts_with($paymentClass, 'Msp3PaymentSkeleton\\Payment\\')) {
+    return;
+}
+
+
 $controller = $scriptProperties['controller'] ?? null;
 if (!is_object($controller) || !method_exists($controller, 'addJavascript')) {
     return;
@@ -47,6 +66,9 @@ $config = [
         'amount' => $modx->lexicon('msp3paymentskeleton.field_amount'),
         'reason' => $modx->lexicon('msp3paymentskeleton.field_reason'),
         'empty' => $modx->lexicon('msp3paymentskeleton.tab_empty'),
+        'loading' => $modx->lexicon('msp3paymentskeleton.tab_loading'),
+        'err_connector' => $modx->lexicon('msp3paymentskeleton.err_connector'),
+        'err_generic' => $modx->lexicon('msp3paymentskeleton.err_generic'),
         'confirm_refund' => $modx->lexicon('msp3paymentskeleton.confirm_refund'),
         'confirm_cancel' => $modx->lexicon('msp3paymentskeleton.confirm_cancel'),
     ],
