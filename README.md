@@ -132,6 +132,8 @@ https://САЙТ/assets/components/minishop3/api.php/api/v1/payment/webhook/{ID_
 
 Плагин вешает вкладку через `MS3OrderTabsRegistry`. Не занимайте ключи `info`, `products`, `address`, `history`, `ms3_shipment`. Handler берите через `PaymentService::loadPaymentHandler`.
 
+Регистрация в `order-tab.js`: stub с `pendingTabs`, один `register()`, без `DOMContentLoaded` / `setTimeout`. Иначе после загрузки `order.min.js` ключ регистрируется дважды.
+
 Возврат зовёт `lifecycle->refund()`, не `$order->set('status_id')`. На попытке `pending` или `authorized` вкладка не ходит в API и пишет, что сначала нужен webhook оплаты или capture.
 
 `BaseProcessor::initialize()` сбрасывает общий `modError`. Иначе текст прошлого failure останется на следующем success.

@@ -70,6 +70,8 @@ POST /assets/components/minishop3/api.php/api/v1/payment/webhook/{payment_method
 
 Плагин на `msOnManagerCustomCssJs` при `page=order` регистрирует вкладку через `MS3OrderTabsRegistry`. Ключ вкладки не должен совпадать с `info`, `products`, `address`, `ms3_shipment`, `history`. Тип `vue` или `extjs`. Connector проверяет сессию mgr и права `msorder_save` / `msorder_view`.
 
+Скрипт из плагина грузится до `order.min.js`. Пока реестра нет, создайте stub с `pendingTabs` и один раз вызовите `register()` — как в [доках MS3](https://docs.modx.pro/en/components/minishop3/development/order-tabs-integration) и в `assets/.../js/mgr/order-tab.js`. Не повторяйте `register` через `DOMContentLoaded` и `setTimeout`: после монтирования Vue оба сработают и дадут `Tab with key "…" already registered`.
+
 ## События
 
 `EventGate::invokeRaw`, если класс есть. Иначе `invokeEvent`.

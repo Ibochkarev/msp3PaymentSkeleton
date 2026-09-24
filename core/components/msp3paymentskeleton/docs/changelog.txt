@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Пакетный webhook берёт способ оплаты заказа и подставляет `external_id` из попытки, если кабинет не шлёт invoice_id (урок PayKeeper).
 - `parseWebhook` передаёт `orderId` из `metadata.order_id` / `orderid`.
 - Возврат из вкладки на `pending` / `authorized` не ходит в API и не показывает `ms3_err_payment_event_conflict`.
+- Вкладка OrderView: stub `MS3OrderTabsRegistry.pendingTabs` и один `register()`. `DOMContentLoaded` + `setTimeout` давали `already registered` после монтирования `order.min.js`.
 
 ### Dependencies
 

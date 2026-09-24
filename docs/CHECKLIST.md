@@ -15,6 +15,7 @@
 - [ ] Возврат из вкладки на `pending` / `authorized` отвечает лексиконом, не ходит в API
 - [ ] Пакетный webhook выбирает способ заказа и умеет найти попытку без invoice_id в POST
 - [ ] Вкладка заказа не занимает ключи `info` / `products` / `address` / `history` / `ms3_shipment`
+- [ ] `order-tab.js` регистрирует вкладку один раз через stub `pendingTabs`, без `DOMContentLoaded` + `setTimeout`
 - [ ] Handler берётся через `PaymentService::loadPaymentHandler`
 - [ ] `composer test` и `php -l` зелёные
 - [ ] Локальная сборка `ENCRYPT=0`, для ModStore пакет зарегистрирован
