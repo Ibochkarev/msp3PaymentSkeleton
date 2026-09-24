@@ -22,7 +22,12 @@ abstract class BaseProcessor extends Processor
 
     public function initialize()
     {
-        $this->modx->error->reset();
+        if (!is_object($this->modx->error) || !method_exists($this->modx->error, 'reset')) {
+            $this->modx->getService('error', 'error.modError');
+        }
+        if (is_object($this->modx->error) && method_exists($this->modx->error, 'reset')) {
+            $this->modx->error->reset();
+        }
 
         return true;
     }

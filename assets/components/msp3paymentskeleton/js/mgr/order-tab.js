@@ -60,6 +60,11 @@
         },
       },
     },
+    computed: {
+      hasAttempts: function () {
+        return this.attempts.length > 0
+      },
+    },
     methods: {
       t: t,
       reload: function () {
@@ -127,9 +132,9 @@
       '<label>{{ t(\'reason\', \'Причина\') }}<input v-model="reason" type="text" autocomplete="off"></label>' +
       '</div>' +
       '<div class="msp3paymentskeleton-tab__actions">' +
-      '<button data-danger type="button" :disabled="loading" @click="call(\'mgr/refund\', { amount: amount, reason: reason }, t(\'confirm_refund\', \'Подтвердите действие\'))">{{ t(\'refund\', \'Возврат\') }}</button>' +
-      '<button type="button" :disabled="loading" @click="call(\'mgr/cancel\', {}, t(\'confirm_cancel\', \'Подтвердите действие\'))">{{ t(\'cancel\', \'Отменить\') }}</button>' +
-      '<button data-primary type="button" :disabled="loading" @click="call(\'mgr/sync\', {})">{{ t(\'sync\', \'Синхронизировать\') }}</button>' +
+      '<button data-danger type="button" :disabled="loading || !hasAttempts" @click="call(\'mgr/refund\', { amount: amount, reason: reason }, t(\'confirm_refund\', \'Подтвердите действие\'))">{{ t(\'refund\', \'Возврат\') }}</button>' +
+      '<button type="button" :disabled="loading || !hasAttempts" @click="call(\'mgr/cancel\', {}, t(\'confirm_cancel\', \'Подтвердите действие\'))">{{ t(\'cancel\', \'Отменить\') }}</button>' +
+      '<button data-primary type="button" :disabled="loading || !hasAttempts" @click="call(\'mgr/sync\', {})">{{ t(\'sync\', \'Синхронизировать\') }}</button>' +
       '</div>' +
       '</div>',
   }
