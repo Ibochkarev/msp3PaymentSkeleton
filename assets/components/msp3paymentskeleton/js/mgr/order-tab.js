@@ -3,6 +3,9 @@
   const lex = cfg.lexicon || {}
 
   function request(action, extra) {
+    if (!cfg.connectorUrl) {
+      return Promise.reject(new Error('msp3 order-tab: connectorUrl is not configured'))
+    }
     const body = new URLSearchParams(Object.assign({ action }, extra || {}))
     const headers = { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
     if (window.MODx && MODx.siteId) {
@@ -120,22 +123,27 @@
     },
   }
 
-  function register() {
-    if (!window.MS3OrderTabsRegistry || typeof window.MS3OrderTabsRegistry.register !== 'function') {
-      return false
+  // Official MS3 pattern: stub with pendingTabs before order.min.js mounts.
+  // Do not retry via DOMContentLoaded + setTimeout — that double-registers the key.
+  if (!window.MS3OrderTabsRegistry) {
+    window.MS3OrderTabsRegistry = {
+      pendingTabs: [],
+      register: function (c) {
+        this.pendingTabs.push(c)
+        return true
+      },
     }
-    return window.MS3OrderTabsRegistry.register({
-      key: 'paymentskeleton',
-      title: lex.tab_title || 'Payment Skeleton',
-      type: 'vue',
-      component: PaymentSkeletonOrderTab,
-      position: 20,
-      hideOnCreate: true,
-    })
   }
-
-  if (!register()) {
-    document.addEventListener('DOMContentLoaded', register)
-    setTimeout(register, 400)
+  if (window.__msp3PaymentSkeletonTabRegistered) {
+    return
   }
+  window.__msp3PaymentSkeletonTabRegistered = true
+  window.MS3OrderTabsRegistry.register({
+    key: 'paymentskeleton',
+    title: lex.tab_title || 'Payment Skeleton',
+    type: 'vue',
+    component: PaymentSkeletonOrderTab,
+    position: 20,
+    hideOnCreate: true,
+  })
 })()
