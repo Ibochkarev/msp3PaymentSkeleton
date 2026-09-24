@@ -19,13 +19,21 @@ class SyncProcessor extends BaseProcessor
         if (!$order instanceof msOrder) {
             return $order;
         }
+        $attempts = $this->attempts()->listForOrder((int) $order->get('id'));
+        $settings = $this->settings($order);
+        if (!$settings->isConfigured()) {
+            return $this->success('', [
+                'attempts' => $attempts,
+                'note' => $this->modx->lexicon('msp3paymentskeleton.err_not_configured'),
+            ]);
+        }
         $paymentId = AttemptReader::providerRefundId(
             $this->latestAttempt((int) $order->get('id')) ?? [],
         );
         try {
             $response = $paymentId !== ''
-                ? $this->settings()->client()->getPayment($paymentId)
-                : $this->settings()->client()->listPayments();
+                ? $settings->client()->getPayment($paymentId)
+                : $settings->client()->listPayments();
         } catch (ProviderException $e) {
             $this->logger()->error('Sync failed', ['error' => $e->getMessage()]);
             return $this->failure($e->getMessage());

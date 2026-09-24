@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Msp3PaymentSkeleton\Processors\Mgr;
 
 use MiniShop3\Model\msOrder;
+use MiniShop3\Model\msPayment;
 use MiniShop3\Services\Payment\PaymentLifecycleService;
 use MODX\Revolution\Processors\Processor;
 use Msp3PaymentSkeleton\Service\AttemptReader;
@@ -28,6 +29,7 @@ abstract class BaseProcessor extends Processor
         if (is_object($this->modx->error) && method_exists($this->modx->error, 'reset')) {
             $this->modx->error->reset();
         }
+        $this->modx->lexicon->load('msp3paymentskeleton:default');
 
         return true;
     }
@@ -52,9 +54,17 @@ abstract class BaseProcessor extends Processor
         return $order;
     }
 
-    protected function settings(): Settings
+    protected function settings(?msOrder $order = null): Settings
     {
-        return new Settings($this->modx);
+        $method = null;
+        if ($order instanceof msOrder) {
+            $method = $this->modx->getObject(msPayment::class, (int) $order->get('payment_id'));
+            if (!$method instanceof msPayment) {
+                $method = null;
+            }
+        }
+
+        return new Settings($this->modx, $method);
     }
 
     protected function logger(): PackageLogger

@@ -52,7 +52,7 @@ class RefundProcessor extends BaseProcessor
         }
         $reason = (string) $this->getProperty('reason', 'Refund');
         try {
-            $response = $this->settings()->client()->refundPayment($paymentId, [
+            $response = $this->settings($order)->client()->refundPayment($paymentId, [
                 'amount' => Money::toKopecks($amount),
                 'reason' => $reason,
             ]);

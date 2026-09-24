@@ -24,7 +24,7 @@ class CancelProcessor extends BaseProcessor
             return $this->failure($this->modx->lexicon('msp3paymentskeleton.err_payment_id'));
         }
         try {
-            $response = $this->settings()->client()->cancelPayment($paymentId);
+            $response = $this->settings($order)->client()->cancelPayment($paymentId);
         } catch (ProviderException $e) {
             $this->logger()->error('Cancel failed', ['error' => $e->getMessage()]);
             return $this->failure($e->getMessage());

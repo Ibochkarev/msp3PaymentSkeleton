@@ -19,3 +19,4 @@ $_lang['msp3paymentskeleton.err_refund_pending'] = 'Сначала дождит�
 $_lang['msp3paymentskeleton.err_refund_hold'] = 'Сначала спишите холд. Возврат после capture.';
 $_lang['msp3paymentskeleton.err_refund_done'] = 'Попытка уже возвращена.';
 $_lang['msp3paymentskeleton.err_refund_status'] = 'Возврат недоступен в текущем статусе попытки.';
+$_lang['msp3paymentskeleton.err_not_configured'] = 'Платёжный пакет не настроен: укажите login и secret_key в properties способа или в системных настройках.';

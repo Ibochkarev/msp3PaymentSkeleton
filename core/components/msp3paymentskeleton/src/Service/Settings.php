@@ -100,6 +100,11 @@ final class Settings
         return (int) $this->modx->getOption('msp3paymentskeleton_payment_object_delivery', null, 4) ?: 4;
     }
 
+    public function isConfigured(): bool
+    {
+        return $this->login() !== '' && $this->secret() !== '';
+    }
+
     public function client(): ApiClient
     {
         return new ApiClient($this->login(), $this->secret(), $this->isTestMode());
