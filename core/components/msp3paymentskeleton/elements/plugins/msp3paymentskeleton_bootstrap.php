@@ -52,8 +52,8 @@ $config = [
     ],
 ];
 
+$controller->addCss($assetsUrl . 'css/mgr/order-tab.css');
 $controller->addHtml(
     '<script>window.msp3PaymentSkeletonConfig = ' . json_encode($config, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . ';</script>'
+    . '<script src="' . htmlspecialchars($assetsUrl . 'js/mgr/order-tab.js', ENT_QUOTES, 'UTF-8') . '"></script>'
 );
-$controller->addCss($assetsUrl . 'css/mgr/order-tab.css');
-$controller->addJavascript($assetsUrl . 'js/mgr/order-tab.js');

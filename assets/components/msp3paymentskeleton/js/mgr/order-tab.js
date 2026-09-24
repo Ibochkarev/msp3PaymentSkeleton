@@ -1,8 +1,14 @@
 ;(function () {
-  const cfg = window.msp3PaymentSkeletonConfig || {}
-  const lex = cfg.lexicon || {}
+  function getCfg() {
+    return window.msp3PaymentSkeletonConfig || {}
+  }
+
+  function getLex() {
+    return getCfg().lexicon || {}
+  }
 
   function request(action, extra) {
+    const cfg = getCfg()
     if (!cfg.connectorUrl) {
       return Promise.reject(new Error('msp3 order-tab: connectorUrl is not configured'))
     }
@@ -118,7 +124,7 @@
       '</div>',
     computed: {
       lex: function () {
-        return lex
+        return getLex()
       },
     },
   }
@@ -140,7 +146,7 @@
   window.__msp3PaymentSkeletonTabRegistered = true
   window.MS3OrderTabsRegistry.register({
     key: 'paymentskeleton',
-    title: lex.tab_title || 'Payment Skeleton',
+    title: getLex().tab_title || 'Payment Skeleton',
     type: 'vue',
     component: PaymentSkeletonOrderTab,
     position: 20,
