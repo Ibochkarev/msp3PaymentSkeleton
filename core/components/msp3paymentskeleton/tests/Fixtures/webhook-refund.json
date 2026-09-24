@@ -1,0 +1,10 @@
+{
+  "event": "payment.refunded",
+  "id": "evt_2",
+  "payment": {
+    "id": "pay_abc",
+    "amount": 500,
+    "currency": "RUB",
+    "status": "refunded"
+  }
+}

@@ -1,0 +1,36 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.0-pl] - 2026-09-23
+
+Первый публичный релиз образца msp3PaymentSkeleton для MODX 3 и MiniShop3.
+
+### Added
+
+- Каркас платёжного дополнения: `Payment` + `PaymentWebhookHandlerInterface`. Статус заказа меняет `ms3_payment_lifecycle`. Провайдер не пишет `status_id`.
+- Скрипт `bin/init.php`: имя пакета, провайдер, опции `--keep=second-method,bindings,receipts-extra`, `--no-encrypt`, `--self-destruct`.
+- Маршрут webhook ядра MiniShop3 и пакетный `webhook.php`, если кабинет принимает один URL на магазин.
+- Вкладка заказа: попытки, возврат, отмена, синхронизация. Опционально чеки 54-ФЗ (`receipt_details`).
+- Секреты сначала в `msPayment.properties`, иначе системные настройки. Блоки `// PROVIDER:` в `ApiClient`, `Signature`, `WebhookParser`, `SkeletonPayment`, `Settings`.
+- Транспорт `EncryptedVehicle` для modstore.pro. Локальная сборка: `ENCRYPT=0`.
+- HTTP через `file_get_contents`. PHPUnit 11. Лексиконы ru.
+
+### Fixed
+
+- `BaseProcessor::checkPermissions()` объявлен как `public`, как требует `MODX\Revolution\Processors\Processor`.
+- `connector.php` отдаёт массив `ProcessorResponse::getResponse()`, а не сам объект ответа.
+- Bootstrap грузит классы через PSR-4. `vendor/autoload.php` после `composer --no-dev` имел один и тот же `ComposerAutoloaderInit` и ронял MODX, если стояло несколько extras.
+- HTTP-транспорт без редиректов и без `file://`. Лог не пишет секреты.
+- `BaseProcessor::initialize()` сбрасывает общий `modError`. Иначе текст прошлого failure оставался на следующем success.
+- `send()` сам кладёт extra id (`operationId`, `invoice_id`, `mdOrder`) в payload через `initiate()`. Ядро в `recordAttemptFromSend()` сохраняет только `payment_link`.
+- Пакетный webhook берёт способ оплаты заказа и подставляет `external_id` из попытки, если кабинет не шлёт invoice_id (урок PayKeeper).
+- `parseWebhook` передаёт `orderId` из `metadata.order_id` / `orderid`.
+- Возврат из вкладки на `pending` / `authorized` не ходит в API и не показывает `ms3_err_payment_event_conflict`.
+
+### Dependencies
+
+- MODX 3.x, MiniShop3 >= 1.14.0-beta1, PHP >= 8.2.

@@ -1,0 +1,89 @@
+.msp3paymentskeleton-tab {
+    padding: 16px 8px 32px;
+    max-width: 72ch;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #1f2937;
+}
+
+.msp3paymentskeleton-tab h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.msp3paymentskeleton-tab__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 16px;
+}
+
+.msp3paymentskeleton-tab__actions button {
+    min-height: 32px;
+    padding: 6px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #fff;
+    color: #111827;
+    cursor: pointer;
+}
+
+.msp3paymentskeleton-tab__actions button[data-primary] {
+    background: #111827;
+    border-color: #111827;
+    color: #fff;
+}
+
+.msp3paymentskeleton-tab__actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.msp3paymentskeleton-tab__empty,
+.msp3paymentskeleton-tab__error {
+    color: #6b7280;
+}
+
+.msp3paymentskeleton-tab__error {
+    color: #b91c1c;
+}
+
+.msp3paymentskeleton-tab table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 24px;
+}
+
+.msp3paymentskeleton-tab th,
+.msp3paymentskeleton-tab td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    font-variant-numeric: tabular-nums;
+}
+
+.msp3paymentskeleton-tab th {
+    font-weight: 500;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.msp3paymentskeleton-tab__form {
+    display: grid;
+    gap: 8px;
+    margin: 0 0 16px;
+    max-width: 28rem;
+}
+
+.msp3paymentskeleton-tab__form label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.msp3paymentskeleton-tab__form input {
+    min-height: 32px;
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}

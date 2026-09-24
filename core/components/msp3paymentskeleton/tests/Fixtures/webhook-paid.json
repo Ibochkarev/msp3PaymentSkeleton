@@ -1,0 +1,10 @@
+{
+  "event": "payment.succeeded",
+  "id": "evt_1",
+  "payment": {
+    "id": "pay_abc",
+    "amount": 1000,
+    "currency": "RUB",
+    "status": "succeeded"
+  }
+}

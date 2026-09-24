@@ -1,0 +1,27 @@
+{
+    "name": "msp3paymentskeleton/msp3paymentskeleton",
+    "version": "1.0.0",
+    "description": "MiniShop3 payment extra skeleton",
+    "type": "modx-component",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=8.2",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Msp3PaymentSkeleton\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Msp3PaymentSkeleton\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}

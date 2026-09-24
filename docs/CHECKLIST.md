@@ -1,0 +1,21 @@
+# Чек-лист перед релизом
+
+- [ ] `send()` возвращает `payment_link`, `payment_id`, `external_id`, `currency`
+- [ ] Класс реализует `PaymentWebhookHandlerInterface`
+- [ ] `verifyWebhook` проверяет raw body. Нет `return true`
+- [ ] Секрет в `msPayment.properties`, не только в системной настройке
+- [ ] Нигде нет `$order->set('status_id')`
+- [ ] `parseWebhook` пишет `PaymentAttemptStatus`, не свои строки
+- [ ] Payload без `secret`, `token`, `api_key`, `password`
+- [ ] Идемпотентность: повтор с тем же `providerEventId` не ломает заказ
+- [ ] Суммы: копейки или рубли, как в API, и это задокументировано
+- [ ] Чек 54-ФЗ не уходит без email
+- [ ] Extra id сверх `external_id` пишется через `lifecycle->initiate()` в `send()`
+- [ ] Возврат зовёт `lifecycle->refund()`, не пишет статус вручную
+- [ ] Возврат из вкладки на `pending` / `authorized` отвечает лексиконом, не ходит в API
+- [ ] Пакетный webhook выбирает способ заказа и умеет найти попытку без invoice_id в POST
+- [ ] Вкладка заказа не занимает ключи `info` / `products` / `address` / `history` / `ms3_shipment`
+- [ ] Handler берётся через `PaymentService::loadPaymentHandler`
+- [ ] `composer test` и `php -l` зелёные
+- [ ] Локальная сборка `ENCRYPT=0`, для ModStore пакет зарегистрирован
+- [ ] README и лексиконы без имён скелета после `init.php`
